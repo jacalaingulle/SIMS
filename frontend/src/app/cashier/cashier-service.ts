@@ -8,6 +8,7 @@ import { signalUpdateFn } from '@angular/core/primitives/signals';
 export class CashierService {
 
   isBrowsingProduct = signal(false);
+  isCheckOut = signal(false);
   products = signal<productsInterface[]>([]);
   filteredproducts = signal<productsInterface[]>([]);
   cart = signal<productsInterface[]>([]);

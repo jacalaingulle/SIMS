@@ -4,10 +4,11 @@ import { CashierCart } from '../cashier-cart/cashier-cart';
 import { CashierService } from '../cashier-service';
 import { ProductList } from '../product-list/product-list';
 import { Service } from '../../service/service';
+import { Checkout } from '../checkout/checkout';
 
 @Component({
   selector: 'app-cashier-main',
-  imports: [CashierNavigations, CashierCart, ProductList],
+  imports: [CashierNavigations, CashierCart, ProductList, Checkout],
   templateUrl: './cashier-main.html',
   styleUrl: './cashier-main.css',
 })

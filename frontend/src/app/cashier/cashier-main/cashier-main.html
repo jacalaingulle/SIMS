@@ -6,3 +6,7 @@
 @if (cashierservice.isBrowsingProduct()){
     <app-product-list></app-product-list>
 }
+
+@if(cashierservice.isCheckOut()){
+    <app-checkout></app-checkout>
+}
