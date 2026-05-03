@@ -1,0 +1,175 @@
+<div id="main-container">
+    <header>
+        <div>
+            <h2>Product Inventory</h2>
+            <p>Manage your products and track prices</p>
+        </div>
+        <button (click)="addProduct()">🞢 Add Product</button>
+    </header>
+
+    <div id="card-container">
+        <div class="card" style="background-color: rgb(212, 230, 255); color: rgb(0, 0, 210);">
+            <p>Total Products</p>
+            <h1>{{ products().length}}</h1>
+        </div>
+        <div class="card" style="background-color: rgb(215, 255, 215); color: rgb(0, 101, 0);">
+            <p>Total Savings</p>
+            <h1>0</h1>
+        </div>
+        <div class="card" style="background-color: rgb(244, 220, 255); color: purple;">
+            <p>Cart Total</p>
+            <h1>0</h1>
+        </div>
+        <div class="card" style="background-color: rgb(255, 245, 232); color: rgb(187, 50, 0);">
+            <p>Items in Stock</p>
+            <h1>{{ products().length}}</h1>
+        </div>
+    </div>
+
+    <div id="product-container">
+        <section id="views">
+            <div>
+                <button [class.selected]="viewAllProducts()" (click)="selectAllProducts()">All Products ({{filteredProducts().length}})</button>
+                <button [class.selected]="viewShoppingCart()" (click)="selectShoppingCart()">Shopping Cart (0)</button>
+            </div>
+            <input type="text" placeholder="Search Here" [formControl]="searchText">
+        </section>
+
+        @if (viewAllProducts()) {
+            <section id="products">
+                @for (product of filteredProducts(); track product.id) {
+                    <div class="prod-card">
+                        <p>{{ product.brand }}</p>
+                        <h3 style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{ product.name }}</h3>
+                        <p>Quantity : {{ product.qty }}</p>
+                        <p>Category : {{ product.category }}</p>
+                        <h2 style="color: oklch(54.6% .245 262.881);">₱ {{ product.unitCost }}.00</h2>
+                        <img src="assets/info-icon.png" alt="" (click)="infoModal(product)">
+                    </div>
+                }
+            </section>
+        }
+    </div>
+
+    @if(viewAddUpdateModal()){
+        <div id="add-update-modal">
+            <div id="modal">
+                <header>
+                    <p>{{ addUpdateModalHeaderText }}</p>
+                    <p style="cursor: pointer;" (click)="closeAddUpdateModal()">&#10005;</p>
+                </header>
+                <form id="prod-info" [formGroup]="productForm">
+                    <div class="add-update-card">
+                        <p>Product Brand</p>
+                        <input type="text" placeholder="Enter Product Brand" style="width: 210px;" formControlName="brand">
+                    </div>
+                    <div class="add-update-card">
+                        <p>Product Name</p>
+                        <input type="text" placeholder="Enter Product Name" style="width: 364.2px;" formControlName="name">
+                    </div>
+                    <div class="add-update-card">
+                        <p>Category</p>
+                        <input type="text" placeholder="Enter Category" style="width: 170px;" formControlName="category">
+                    </div>
+                    <div class="add-update-card">
+                        <p>Quantity</p>
+                        <input type="text" placeholder="Enter Quantity" style="width: 105px;" formControlName="qty" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    </div>
+                    <div class="add-update-card">
+                        <p>Discount (%)</p>
+                        <input type="text" placeholder="Enter Discount" style="width: 105px;" formControlName="discount" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    </div>
+                    <div class="add-update-card">
+                        <p>Unit Type</p>
+                        <input type="text" placeholder="Enter Unit Type" style="width: 110px;" formControlName="unit">
+                    </div>
+                    <div class="add-update-card">
+                        <p>Unit Cost</p>
+                        <input type="text" placeholder="Enter Unit Cost" style="width: 177.5px;" formControlName="unitCost" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    </div>
+                    <div class="add-update-card">
+                        <p>Retail Price</p>
+                        <input type="text" placeholder="Enter Retail Price" style="width: 177.5px;" formControlName="retailPrice" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    </div>
+                    <div class="add-update-card">
+                        <p>Wholesale Price</p>
+                        <input type="text" placeholder="Enter Wholesale Price" style="width: 177.5px;" formControlName="wholesalePrice" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    </div>
+                    <button type="submit" (click)="submitBtn()" [disabled]="productForm.invalid">{{ addUpdateModalBtnText }}</button>
+                </form>
+            </div>
+        </div>
+    }
+
+    @if (viewConfirmationModal()) {
+        <div id="confirmation-modal-backdrop">
+            <div id="modal">
+                <p>{{ service.confirmationMsg() }}</p>
+                <div>
+                    <button style="background-color: red;" (click)="viewConfirmationModal.set(false)">Cancel</button>
+                    <button style="background-color: green;" (click)="continueAction()">Continue</button>
+                </div>
+            </div>
+        </div>
+    }
+    
+    @if (viewProdInfo()) {
+        <div id="info-modal-backdrop">
+            <div id="modal">
+                <header>
+                    <p>Product Information</p>
+                    <p style="cursor: pointer;" (click)="this.viewProdInfo.set(false);">&#10005;</p>
+                </header>
+                <section id="information">
+                    <div class="info-card" style="width: 13%;">
+                        <h2>{{selectedProduct.id}}</h2>
+                        <p>Product ID</p>
+                    </div>
+                    <div class="info-card" style="width: 30%;">
+                        <h2>{{selectedProduct.brand}}</h2>
+                        <p>Product Brand</p>
+                    </div>
+                    <div class="info-card" style="width: 43%;">
+                        <h2 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{selectedProduct.name}}</h2>
+                        <p>Product Name</p>
+                    </div>
+                    <div class="info-card" style="width: 22%;">
+                        <h2>{{selectedProduct.serial}}</h2>
+                        <p>Serial Number</p>
+                    </div>
+                    <div class="info-card" style="width: 28%;">
+                        <h2>{{selectedProduct.category}}</h2>
+                        <p>Category</p>
+                    </div>
+                    <div class="info-card" style="width: 15%;">
+                        <h2>{{selectedProduct.qty}}</h2>
+                        <p>Quantity</p>
+                    </div>
+                    <div class="info-card" style="width: 15%;">
+                        <h2>{{selectedProduct.unit}}</h2>
+                        <p>Unit Type</p>
+                    </div>
+                    <div class="info-card" style="width: 12%;">
+                        <h2>{{selectedProduct.discount}}%</h2>
+                        <p>Discount</p>
+                    </div>
+                    <div class="info-card" style="width: 22%;">
+                        <h2>₱ {{selectedProduct.unitCost}}.00</h2>
+                        <p>Unit Cost</p>
+                    </div>
+                    <div class="info-card" style="width: 22%;">
+                        <h2>₱ {{selectedProduct.retailPrice}}.00</h2>
+                        <p>Retail Price</p>
+                    </div>
+                    <div class="info-card" style="width: 22%;">
+                        <h2>₱ {{selectedProduct.wholesalePrice}}.00</h2>
+                        <p>Wholesale Price</p>
+                    </div>
+                    <button style="background-color: oklch(54.6% .245 262.881);">Add to Shopping Cart</button>
+                    <button style="background-color: rgb(244, 153, 25);" (click)="updateProduct()">Update Product</button>
+                    <button style="background-color: rgb(255, 0, 0);" (click)="deleteProduct()">Delete Product</button>
+                </section>
+            </div>
+        </div>
+    }
+</div>

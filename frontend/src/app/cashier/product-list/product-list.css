@@ -1,0 +1,65 @@
+#main-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100vw;
+    height: 100vh;
+    justify-items: center;
+    align-content: center;
+
+    #modal{
+        width: 85vw;
+        background-color: white;
+        padding: 30px;
+        padding-top: 0;
+
+        p{
+            padding-top: 25px;
+            width: 100%;
+            text-align: end;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        input{
+            width: 250px;
+            height: 35px;
+            padding-left: 20px;
+            border-radius: 5px;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            outline: none;
+            margin-bottom: 20px;
+        }
+
+        #table-container{   
+            width: 85vw;
+            height: 60vh;
+            overflow: auto;
+            scrollbar-width: thin;
+
+            table{
+                width: 2000px;
+                border-collapse: collapse;
+
+                th{
+                    text-align: center;
+                    border: 1px solid rgba(0, 0, 0, 0.2);
+                    height: 40px;
+                    background-color: rgb(70, 70, 237);
+                    color: white;
+                }
+
+                td{
+                    height: 40px;
+                    border: 1px solid rgba(0, 0, 0, 0.2);
+                    cursor: pointer;
+                }
+
+                tr:hover{
+                    background-color: rgb(235, 235, 255);
+                }
+            }
+        }
+    }
+}

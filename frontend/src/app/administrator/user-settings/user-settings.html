@@ -1,0 +1,158 @@
+@if (service.loggedUser.type.toLowerCase() === "administrator") {
+    <div id="main-container">
+        <header>
+            <div>
+                <h2>User Settings</h2>
+                <p>Manage your account details and access</p>
+            </div>
+            <button (click)="createUserButton()">🞢 Create New User</button>
+        </header>
+
+        <div id="card-container">
+            <div class="card" style="background-color: rgb(215, 255, 215); color: rgb(0, 101, 0);">
+                <p>Administrator</p>
+                <h1>{{ this.filteredUsers().filter(user => user.type.toLowerCase() === "administrator").length }}</h1>
+            </div>
+            <div class="card" style="background-color: rgb(212, 230, 255); color: rgb(0, 0, 210);">
+                <p>Inventory Clerk</p>
+                <h1>{{ this.filteredUsers().filter(user => user.type.toLowerCase() === "inventory clerk").length }}</h1>
+            </div>
+            <div class="card" style="background-color: rgb(244, 220, 255); color: purple;">
+                <p>Cashier</p>
+                <h1>{{ this.filteredUsers().filter(user => user.type.toLowerCase() === "cashier").length }}</h1>
+            </div>
+        </div>
+
+        <div id="user-container">
+            <table>
+                <tr>
+                    <th style="width: 25%;">Account Name</th>
+                    <th style="width: 17%;">Username</th>
+                    <th style="width: 17%;">Account Type</th>
+                    <th style="width: 25%;">Email Address</th>
+                    <th>Contact Number</th>
+                </tr>
+                @for (user of filteredUsers(); track $index) {
+                    <tr id="data" (click)="infoModal(user)">
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.type }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.number.substring(0,4) + ' ' + user.number.substring(4,7) + ' ' + user.number.substring(7) }}</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        @if(viewAddUpdateModal()){
+            <div id="add-update-backdrop">
+                <div id="modal">
+                    <header>
+                        <p>{{ addUpdateModalLabel() }}</p>
+                        <p style="cursor: pointer;" (click)="closeAddUpdateModal()">&#10005;</p>
+                    </header>
+                    <form id="sections" [formGroup]="userForm">
+                        <section>
+                            <p>Account Name</p>
+                            <input type="text" placeholder="e.g. Christopher Williams" style="width: 176px;" formControlName="name">
+                        </section>
+                        <section>
+                            <p>Username</p>
+                            <input type="text" placeholder="e.g. williams" style="width: 176px;" formControlName="username">
+                        </section>
+                        <section>
+                            <p>Create Password</p>
+                            <input type="password" placeholder="Enter Password" style="width: 176px;" formControlName="password" [readOnly]="isUpdatingUser()">
+                        </section>
+                        <section>
+                            <p>Confirm Password</p>
+                            <input type="password" placeholder="Re-enter Password" style="width: 176px;" formControlName="cpassword" [readOnly]="isUpdatingUser()">
+                        </section>
+                        <section>
+                            <p>Account Type</p>
+                            <input type="text" placeholder="e.g. Administrator" style="width: 176px;" formControlName="type">
+                        </section>
+                        <section>
+                            <p>Contact Number</p>
+                            <input type="text" placeholder="e.g. 09106772305" style="width: 176px;" onkeypress="return event.charCode >= 48 && event.charCode <= 57" minlength="11" maxlength="11" formControlName="number">
+                        </section>
+                        <section>
+                            <p>Email Address</p>
+                            <input type="text" placeholder="e.g. christopher@gmail.com" style="width: 404px;" formControlName="email">
+                        </section>
+                        <section>
+                            <p>Home Address</p>
+                            <input type="text" placeholder="e.g. Brgy. Sikatuna, Cebu City, Cebu" style="width: 404px;" formControlName="address">
+                        </section>
+                    </form>
+                    <button (click)="submitButton()" type="submit" [disabled]="userForm.invalid">{{ addUpdateBtnText() }}</button>
+                </div>
+            </div>
+        }
+
+        @if (viewInfoModal()) {
+            <div id="info-backdrop">
+                <div id="modal">
+                    <header>
+                        <p>User Information</p>
+                        <p style="cursor: pointer;" (click)="viewInfoModal.set(false)">&#10005;</p>
+                    </header>
+                    <div id="sections">
+                        <div class="user-info" style="width: 11%;">
+                            <p>User ID</p>
+                            <h2>{{ selectedUser.id }}</h2>
+                        </div>
+                        <div class="user-info" style="width: 75.3%;">
+                            <p>Name</p>
+                            <h2>{{ selectedUser.name }}</h2>
+                        </div>
+                        <div class="user-info" style="width: 42%;">
+                            <p>Username</p>
+                            <h2>{{ selectedUser.username }}</h2>
+                        </div>
+                        <div class="user-info" style="width: 44.3%;">
+                            <p>Password</p>
+                            <h2>{{ passLength }}</h2>
+                        </div>
+                        <div class="user-info" style="width: 46.3%;">
+                            <p>Account Type</p>
+                            <h2>{{ selectedUser.type }}</h2>
+                        </div>
+                        <div class="user-info" style="width: 40%;">
+                            <p>Contact Number</p>
+                            <h2>{{ selectedUser.number }}</h2>
+                        </div>
+                        <div class="user-info" style="width: 100%;">
+                            <p>Email Address</p>
+                            <h2>{{ selectedUser.email }}</h2>
+                        </div>
+                        <div class="user-info" style="width: calc(100% - 27px);">
+                            <p>Home Address</p>
+                            <h2 style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{ selectedUser.address }}</h2>
+                        </div>
+                        <button style="background-color: rgb(244, 153, 25);" (click)="updateButton()">Update User</button>
+                        <button style="background-color: rgb(255, 0, 0);" (click)="removeButton()">Remove User</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (viewConfirmationModal()) {
+            <div id="confirmation-modal-backdrop">
+                <div id="modal">
+                    <p>{{ service.confirmationMsg() }}</p>
+                    <div>
+                        <button style="background-color: red;" (click)="viewConfirmationModal.set(false)">Cancel</button>
+                        <button style="background-color: green;" (click)="continueAction()">Continue</button>
+                    </div>
+                </div>
+            </div>
+        }
+        
+    </div>
+
+}@else {
+    <div id="no-access">
+        <p style="font-size: 20px;">🔒 You do not have access.</p>
+    </div>
+}

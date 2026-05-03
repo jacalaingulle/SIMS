@@ -1,0 +1,26 @@
+
+@if (this.service.validLogin()) {
+
+    @if(this.service.loggedUser.type.toLowerCase() === "administrator" || this.service.loggedUser.type.toLowerCase() === "inventory clerk"){
+        <app-main-component></app-main-component>   
+    }@else{
+        <app-cashier-main></app-cashier-main>
+    }
+    
+}@else{
+    <div id="backdrop">
+        <div id="modal">
+            <header>
+                <p style="font-size: 55px;">HezTech</p>
+                <p style="font-size: 18px; margin-top: -10px; color: rgba(0, 0, 0, 0.8);">Computer Store</p>
+            </header>
+
+            <section>
+                <input type="text" [class.invalid]="errorLogin()" placeholder="Username" #username>
+                <input type="text" [class.invalid]="errorLogin()" placeholder="Password" #password>
+            </section>
+
+            <button (click)="clickBtn(username, password)">Sign In</button>
+        </div>
+    </div>  
+}

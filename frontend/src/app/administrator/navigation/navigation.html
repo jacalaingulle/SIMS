@@ -1,0 +1,23 @@
+<div id="main-container">
+    <header>
+        <h2 style="color: oklch(54.6% .245 262.881); font-size: 35px;">HezTech</h2>
+        <p style="color: black; font-weight: 500; margin-top: -5px; margin-left: 2px;">Computer Store</p>
+    </header>
+    <section>
+        @for (navigation of navigations; track $index) {
+            <p (click)="selectNav($index)" [class.selected]="service.selectedNav() === $index">{{ navigation }}</p>
+        }
+    </section>
+
+    <div id="log-out" (click)="confirmLogout.set(true)">⬅️ Log Out</div>
+</div>
+
+@if (confirmLogout()){
+    <div id="backdrop" style="z-index: 1;">
+        <div id="modal">
+            <h2>Are you sure you want to Log Out?</h2>
+            <button style="background-color: red;" (click)="service.validLogin.set(false);">Log Out</button>
+            <button style="background-color: rgb(89, 144, 137);" (click)="confirmLogout.set(false);">Cancel</button>
+        </div>
+    </div>
+}

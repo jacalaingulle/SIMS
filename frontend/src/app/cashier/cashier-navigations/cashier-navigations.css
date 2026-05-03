@@ -1,0 +1,49 @@
+#main-container{
+    width: 250px;
+    height: 100vh;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+
+    header{
+        padding-top: 10px;
+        height: 80px;
+        background-color: white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    #user{
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        
+        img{
+            width: 100px;
+            height: 100px;
+            margin-bottom: 5px;
+        }
+
+    }
+
+    section{
+        padding-left: 15%;
+        padding-right: 15%;
+
+        nav{
+            margin-top: 15px;
+            margin-bottom: 15px;
+            height: 45px;
+            font-weight: 600;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            align-content: center;
+            cursor: pointer;
+        }
+
+        nav:hover{
+            opacity: 80%;
+        }
+    }
+}

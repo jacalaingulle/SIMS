@@ -1,0 +1,8 @@
+<div>
+    <app-navigation></app-navigation>
+    @if (service.selectedNav() === 1) {
+        <app-product-inventory></app-product-inventory>
+    }@else if (service.selectedNav() === 3) {
+        <app-user-settings></app-user-settings>
+    }
+</div>

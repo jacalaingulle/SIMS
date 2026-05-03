@@ -1,0 +1,24 @@
+import { Component, OnInit, signal } from '@angular/core';
+import { CashierNavigations } from '../cashier-navigations/cashier-navigations';
+import { CashierCart } from '../cashier-cart/cashier-cart';
+import { CashierService } from '../cashier-service';
+import { ProductList } from '../product-list/product-list';
+import { Service } from '../../service/service';
+
+@Component({
+  selector: 'app-cashier-main',
+  imports: [CashierNavigations, CashierCart, ProductList],
+  templateUrl: './cashier-main.html',
+  styleUrl: './cashier-main.css',
+})
+export class CashierMain implements OnInit{
+  
+  constructor(public cashierservice : CashierService, public service : Service){}
+
+  ngOnInit(): void {
+    this.service.getProducts().subscribe( data => {
+      this.cashierservice.products.set(data);
+      this.cashierservice.filteredproducts.set(data);
+    });
+  }
+}

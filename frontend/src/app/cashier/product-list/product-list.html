@@ -1,0 +1,37 @@
+<div id="main-container">
+    <div id="modal">
+        <p (click)="cashierservice.isBrowsingProduct.set(false)">&#10005;</p>
+        <input type="text" placeholder="Search Here" autofocus>
+        <div id="table-container">
+            <table>
+                <tr>
+                    <th style="width: 80px;">ID</th>
+                    <th style="width: 200px;">Serial Number</th>
+                    <th style="width: 300px;">Product Brand</th>
+                    <th style="width: 350px;">Product Name</th>
+                    <th style="width: 120px;">Quantity</th>
+                    <th style="width: 180px;">Category</th>
+                    <th style="width: 150px;">Unit Type</th>
+                    <th style="width: 200px;">Unit Cost</th>
+                    <th style="width: 200px;">Retail Price</th>
+                    <th style="width: 200px;">Wholesale Price</th>
+                </tr>
+                @for (product of cashierservice.filteredproducts(); track $index) {
+                    <tr (click)="selectProduct(product)">
+                        <td style="text-align: center;">{{ product.id }}</td>
+                        <td style="text-align: center;">{{ product.serial }}</td>
+                        <td style="padding-left: 20px;">{{ product.brand }}</td>
+                        <td style="padding-left: 20px;">{{ product.name }}</td>
+                        <td style="text-align: center;">{{ product.qty }}</td>
+                        <td style="text-align: center;">{{ product.category }}</td>
+                        <td style="text-align: center;">{{ product.unit }}</td>
+                        <td style="text-align: center;">{{ product.unitCost }}</td>
+                        <td style="text-align: center;">{{ product.retailPrice }}</td>
+                        <td style="text-align: center;">{{ product.wholesalePrice }}</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,115 @@
+#table-section{
+    height: 80vh;
+    background-color: rgb(250, 250, 250);
+    overflow-y: auto;
+    scrollbar-width: none;
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    table{
+        width: calc(100vw - 255px);
+        border-collapse: collapse;
+
+        th{
+            height: 40px;
+            background-color: rgb(70, 70, 237);
+            border: 1px solid rgb(70, 70, 237);
+            color: white;
+            position: sticky;
+            top: 0;
+            left: 0;
+        }
+
+        td{
+            height: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-right: none;
+            cursor: pointer;
+        }
+    }
+}
+
+#lower-section{   
+    align-items: center;
+    height: calc(20vh - 1px);
+    display: flex;
+
+    #time{
+        width: 25%;
+        height: 100%;
+        text-align: center;
+        align-content: center;
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+        font-size: 60px;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        opacity: 70%;
+    }
+
+    #transc-id-container{
+        width: 53%;
+        height: 100%;
+        align-content: center;
+        text-align: center;
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    #total{
+        width: 27%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height: 1.8;
+
+        #total-label{
+            padding-left: 30px;
+        }
+
+        #total-value{
+            padding-right: 30px;
+            text-align: end;
+            font-weight: 700;
+        }
+    }
+}
+
+#qty-backdrop{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100vw;
+    height: 100vh;
+    justify-items: center;
+    align-content: center;
+    z-index: 1;
+
+    #qty-modal{
+        background-color: white;
+        padding: 40px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+
+        input{
+            height: 60px;
+            width: 150px;
+            text-align: center;
+            outline: none;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 35px;
+            font-weight: 700;
+        }
+
+        button{
+            height: 40px;
+            font-size: 25px;
+            width: 70px;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+    }
+}

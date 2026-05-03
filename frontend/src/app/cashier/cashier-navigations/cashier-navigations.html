@@ -1,0 +1,17 @@
+<div id="main-container">
+    <header>
+        <h2 style="color: oklch(54.6% .245 262.881); font-size: 35px;">HezTech</h2>
+        <p style="color: black; font-weight: 500; margin-top: -5px;">Computer Store</p>
+    </header>
+    <div id="user">
+        <img src="assets/user-icon.png" alt="">
+        <h3>{{ service.loggedUser.name }}</h3>
+        <p>{{ service.loggedUser.type }}</p>
+    </div>
+    <section>
+        <nav style="background-color: rgb(70, 70, 237);" (click)="cashierservice.isBrowsingProduct.set(true)">Browse Products</nav>
+        <nav style="background-color: rgb(34, 140, 34);">Checkout</nav>
+        <nav style="background-color: rgb(246, 140, 35);">Sales Report</nav>
+        <nav style="background-color: rgb(251, 72, 72);">Log Out</nav>
+    </section>
+</div>

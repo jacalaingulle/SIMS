@@ -1,0 +1,301 @@
+#main-container{
+    width: calc(100vw - 261px);
+
+    header{
+        display: flex;
+        padding-left: 30px;
+        padding-right: 30px;
+        justify-content: space-between;
+        align-items: center;
+        height: 100px;
+
+        button{
+            padding-left: 17px;
+            padding-right: 17px;
+            height: 40px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            background-color: oklch(54.6% .245 262.881);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover{
+            opacity: 80%;
+        }
+    }
+
+    #card-container{
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        display: flex;
+        gap: 20px;
+
+        .card{
+            width: 300px;
+            height: 60px;
+            border-radius: 10px;
+            border: none;
+            padding: 15px;
+            padding-left: 25px;
+            font-weight: 600;
+        }
+    }
+
+    #product-container{
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-top: 20px;
+
+        section#views{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+
+            button{
+                width: 150px;
+                height: 38px;
+                border: none;
+                border-radius: 10px;
+                margin-right: 5px;
+                cursor: pointer;
+                font-size: 15px;
+                background-color: transparent;
+            }
+
+            .selected{
+                background-color: oklch(54.6% .245 262.881);
+                color: white;
+                transition: 0.1s ease-in;
+            }
+
+            input{
+                width: 250px;
+                padding-left: 20px;
+                outline: none;
+                cursor: text;
+                border-radius: 10px;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                height: 40px;
+            }
+        }
+
+        section#products{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            .prod-card{
+                position: relative;
+                width: 233px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                padding-left: 30px;
+                padding-right: 30px;
+                border-radius: 20px;
+                border: 2px solid rgba(0, 0, 0, 0.13);
+                line-height: 28px;
+
+                img{
+                    width: 25px;
+                    height: 25px;
+                    opacity: 70%;
+                    position: absolute;
+                    bottom: 20px;
+                    right: 30px;
+                    cursor: pointer;
+                }
+
+                img:hover{
+                    opacity: 40%;
+                }
+            }
+        }
+    }
+
+    #info-modal-backdrop{
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.45);
+        justify-items: center;
+        align-content: center;
+
+        #modal{
+            width: 750px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+
+            header{
+                height: 20px;
+                width: 100%;
+                padding: 0;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            section#information{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                width: 100%;
+                gap: 20px;
+                
+                .info-card{
+                    padding-left: 20px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    border-radius: 10px;
+                    border: 1px solid rgba(0, 0, 0, 0.2);
+
+                    p{
+                        font-size: 14px;
+                        opacity: 70%;
+                    }
+                }
+
+                button{
+                    width: 31%;
+                    height: 40px;
+                    border-radius: 10px;
+                    border: none;
+                    color: white;
+                    font-weight: 500;
+                    cursor: pointer;
+                    font-size: 15px;
+                }
+
+                button:hover{
+                    opacity: 70%;
+                }
+                
+            }
+        }
+    }
+
+    #add-update-modal{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(0, 0, 0, 0.45);
+        justify-items: center;
+        align-content: center;
+
+        #modal{
+            width: 41.5%;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            border: none;
+
+            header{
+                padding: 0;
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+                height: 20px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            #prod-info{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 20px;
+
+                .add-update-card{
+                    position: relative;
+                    margin-bottom: 10px;
+
+                    p{
+                        position: absolute;
+                        top: -10px;
+                        left: 17px;
+                        background-color: white;
+                        padding-left: 8px;
+                        padding-right: 8px;
+                        font-size: 13px;
+                        font-weight: 500;
+                    }
+
+                    input{
+                        height: 50px;
+                        padding-left: 20px;
+                        border: 1px solid rgba(0, 0, 0, 0.2);
+                        outline: none;
+                        border-radius: 10px;
+                    }                    
+                }
+
+                button{
+                    height: 45px;
+                    width: 100%;
+                    background-color: rgb(229, 229, 229);
+                    color: rgba(0, 0, 0, 0.334);
+                    border-radius: 10px;
+                    border: none;
+                    cursor: pointer;
+                    font-weight: 500;
+                    font-size: 15px;
+                }
+
+                button:enabled{
+                    background-color:blue;
+                    color: white;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    #confirmation-modal-backdrop{
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.45);
+        justify-items: center;
+        align-content: center;
+        z-index: 1;
+
+        #modal{
+            width: 500px;
+            height: 140px;
+            background-color: white;
+            align-content: center;
+            justify-items: center;
+            border-radius: 10px;
+
+            p{
+                font-size: 20px;
+                font-weight: 200;
+                margin-bottom: 15px;
+            }
+
+            button{
+                width: 150px;
+                height: 35px;
+                margin-left: 5px;
+                margin-right: 5px;
+                cursor: pointer;
+                border-radius: 5px;
+                border: none;
+                color: white;
+                font-size: 15px;
+                font-weight: 700;
+            }
+        }
+    }
+}
