@@ -19,7 +19,6 @@ export class CashierCart implements OnInit{
 
   retail = signal(false);
   time = signal(new Date());
-  transactionId = signal('');
   updatingQty = signal(false);
   selectedItem!: productsInterface;
   
@@ -29,7 +28,7 @@ export class CashierCart implements OnInit{
       this.cdr.detectChanges();
     }, 1000);
 
-    this.transactionId.set(this.time().getTime().toString());
+    this.cashierservice.transactionId.set(this.time().getTime().toString());
   }
 
   selectCartItem(item : productsInterface){

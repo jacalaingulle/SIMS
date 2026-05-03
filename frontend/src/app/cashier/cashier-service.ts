@@ -14,5 +14,6 @@ export class CashierService {
   subtotal = signal<number>(0);
   vat = signal<number>(0);
   discount = signal<number>(0)
+  transactionId = signal('');
 
 }
