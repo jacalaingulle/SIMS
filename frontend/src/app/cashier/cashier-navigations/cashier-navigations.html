@@ -9,9 +9,9 @@
         <p>{{ service.loggedUser.type }}</p>
     </div>
     <section>
-        <nav style="background-color: rgb(70, 70, 237);" (click)="cashierservice.isBrowsingProduct.set(true)">Browse Products</nav>
-        <nav style="background-color: rgb(34, 140, 34);" (click)="cashierservice.isCheckOut.set(true)">Checkout</nav>
-        <nav style="background-color: rgb(246, 140, 35);">Sales Report</nav>
-        <nav style="background-color: rgb(251, 72, 72);">Log Out</nav>
+        <button style="background-color: rgb(70, 70, 237);" (click)="cashierservice.isBrowsingProduct.set(true)">Browse Products</button>
+        <button style="background-color: rgb(34, 140, 34);" (click)="cashierservice.isCheckOut.set(true)" [disabled]="cashierservice.totalAmount() === 0">Checkout</button>
+        <button style="background-color: rgb(246, 140, 35);">Sales Report</button>
+        <button style="background-color: rgb(251, 72, 72);">Log Out</button>
     </section>
 </div>

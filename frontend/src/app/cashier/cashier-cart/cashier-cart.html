@@ -14,8 +14,8 @@
                 <td style="text-align: center;">{{ product.unit }}</td>
                 <td style="padding-left: 10px;">{{ product.brand }}</td>
                 <td style="padding-left: 10px;">{{ product.name }}</td>
-                <td style="text-align: center;">@if(product.qty >= 5){{{ product.wholesalePrice }}}@else{{{ product.retailPrice}}}</td>
-                <td id="totalcost" style="text-align: center;">@if(product.qty >= 5){{{ product.wholesalePrice * product.qty }}}@else{{{ product.retailPrice * product.qty }}}</td>
+                <td style="text-align: center;">{{ product.price }}</td>
+                <td id="totalcost" style="text-align: center;">{{ product.totalprice }}</td>
             </tr>        
         }
     </table>
@@ -30,26 +30,33 @@
     <div id="total">
         <div id="total-label">
             <p>Subtotal</p>
-            <p>VAT</p>
+            <div id="vat" style="display: flex; align-items: center;">
+                <input type="checkbox" style="margin-top: 3.5px; margin-right: 5px;" #vat (change)="toggleVat(vat)" [checked]="cashierservice.checkedVat()">
+                <p>VAT</p>
+            </div>
             <p>Discount</p>
             <p style="font-size: 20px; margin-top: -5px;">Total Amount</p>
         </div>
         <div id="total-value">
-            <p>{{ cashierservice.subtotal() }}</p>
-            <p>0</p>
-            <p>0</p>
-            <p style="font-size: 20px; margin-top: -5px;">{{ cashierservice.subtotal() }}</p>
+            <p>₱ {{ cashierservice.subtotal() | number:'1.2-2' }}</p>
+            <p>₱ {{ cashierservice.vat() | number:'1.2-2' }}</p>
+            <p>₱ {{ cashierservice.discount() | number:'1.2-2' }}</p>
+            <p style="font-size: 20px; margin-top: -5px;">₱ {{ cashierservice.totalAmount() | number:'1.2-2' }}</p>
         </div>
     </div>
 </section>
 
-@if (updatingQty()) {
-    <div id="qty-backdrop">
-        <div id="qty-modal">
+@if (updatingItem()) {
+    <div id="item-backdrop">
+        <div id="item-modal">
             <h3>Quantity</h3>
             <input #newqty type="text" [value]="selectedItem.qty" autofocus onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-            <button style="margin-right: 12px; background-color: green;" (click)="changeQty(newqty)">O</button>
-            <button style="background-color: red;" (click)="updatingQty.set(false)">✕</button>
+            <div class="box-container">
+                <input type="checkbox" class="txtbox" #wholesale [checked]="checkedWholesale()">
+                <p style="margin-top: -3px; margin-left: 10px;">Wholesale Price</p>
+            </div>
+            <button style="margin-right: 12px; background-color: green;" (click)="updateItem(newqty, wholesale.checked)">O</button>
+            <button style="background-color: red;" (click)="updatingItem.set(false)">✕</button>
         </div>
     </div>
 }

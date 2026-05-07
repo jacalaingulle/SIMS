@@ -9,7 +9,23 @@ export interface productsInterface {
     unitCost: number,
     discount: number,
     retailPrice: number,
-    wholesalePrice: number
+    wholesalePrice: number,
+    wholesaleApplied?: boolean
+}
+
+export interface cartInterface {
+    id: number,
+    serial: number,
+    qty: number,
+    unit: string,
+    brand: string,
+    name: string,
+    price: number,
+    totalprice: number,
+    discount: number,
+    retailPrice: number,
+    wholesalePrice: number,
+    wholesaleApplied: boolean
 }
 
 export interface usersInterface{

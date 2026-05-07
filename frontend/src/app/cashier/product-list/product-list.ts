@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CashierService } from '../cashier-service';
-import { productsInterface } from '../../interface/interface';
+import { cartInterface, productsInterface } from '../../interface/interface';
 
 @Component({
   selector: 'app-product-list',
@@ -21,13 +21,14 @@ export class ProductList {
       serial: product.serial,
       brand: product.brand,
       name: product.name,
-      category: product.category,
       qty: 1,
       unit: product.unit,
-      unitCost: product.unitCost,
       discount: product.discount,
-      retailPrice: product.retailPrice,
-      wholesalePrice: product.wholesalePrice
+      price: product.retailPrice - (product.retailPrice * (product.discount / 100)),
+      totalprice: product.retailPrice - (product.retailPrice * (product.discount / 100)),
+      retailPrice: product.retailPrice - (product.retailPrice * (product.discount / 100)),
+      wholesalePrice: product.wholesalePrice - (product.wholesalePrice * (product.discount / 100)),
+      wholesaleApplied : false
     }
 
     if(!exists){
@@ -35,15 +36,11 @@ export class ProductList {
     }else{
       const i = this.cashierservice.cart().findIndex(item => item.serial === prodData.serial);
       this.cashierservice.cart()[i].qty =  this.cashierservice.cart()[i].qty += 1;
+      this.cashierservice.cart()[i].totalprice = this.cashierservice.cart()[i].price * this.cashierservice.cart()[i].qty;
     }
 
-    this.calculateTotal();
     this.cashierservice.isBrowsingProduct.set(false);
-  }
-
-  calculateTotal(){
-    this.cashierservice.subtotal.set(this.cashierservice.cart().reduce((sum, item) => sum + (item.qty < 5 ? item.retailPrice * item.qty : item.wholesalePrice * item.qty), 0))
-    this.cashierservice.vat.set(this.cashierservice.subtotal() !== 0 ? this.cashierservice.subtotal() * 0.12 : 0);
+    this.cashierservice.calculateSummary();
   }
 
 }

@@ -4,70 +4,27 @@
             <p>Checkout</p>
             <p style="cursor: pointer;" (click)="cashierservice.isCheckOut.set(false)">&#10005;</p>
         </header>
-        <div id="sub-container">
-            <div id="preview">
-                <section>
-                    <div id="receipt-header">
-                        <p style="font-size: 35px; font-weight: 800;">HezTech</p>
-                        <p style="margin-top: -5px; margin-bottom: 10px;">Computer Store</p>
-                        <p style="font-size: 13px;">Cabadbaran City, Agusan del Norte, Philippines</p>
-                        <p style="font-size: 13px;">Email Address: heztechcomputerstore@gmail.com</p>
-                        <p style="font-size: 13px;">Contact #: 0910-671-3054</p>
-                        <svg id="transaction-barcode" style="margin-top: 5px; margin-bottom: 5px;"></svg>
-                    </div>
-                    <div id="customer">
-                        <p style="font-size: 13px;">Customer Name: __________________________________________</p>
-                        <p style="font-size: 13px;">Date: {{ date.toDateString() }}</p>
-                    </div>
-                    <div id="cart">
-                        <table>
-                            <tr>
-                                <th style="width: 10%;">Qty.</th>
-                                <th style="width: 10%;">Unit</th>
-                                <th style="width: 50%;">Description</th>
-                                <th style="width: 15%;">Unit Cost</th>
-                                <th style="width: 15%;">Total Cost</th>
-                            </tr>
-                            @for (item of cashierservice.cart(); track $index) {
-                                <tr>
-                                    <td>{{ item.qty }}</td>
-                                    <td>{{ item.unit }}</td>
-                                    <td style="text-align: start; padding-left: 10px;">{{ item.name }}</td>
-                                    <td>{{ item.retailPrice }}</td>
-                                    <td>{{ item.retailPrice * item.qty }}</td>
-                                </tr>
-                            }
-                        </table>
-                    </div>
-                    <div id="total">
-                        <div class="values">
-                            <p>Subtotal :</p>
-                            <p style="font-weight: 700;">₱ {{ cashierservice.subtotal() }}.00</p>
-                        </div>
-                        <div class="values">
-                            <p>VAT :</p>
-                            <p style="font-weight: 700;">₱ 0.00</p>
-                        </div>
-                        <div class="values">
-                            <p>Discount :</p>
-                            <p style="font-weight: 700;">₱ 0.00</p>
-                        </div>
-                        <div class="values">
-                            <p style="font-size: 17px;">Total :</p>
-                            <p style="font-weight: 700; font-size: 17px;">₱ {{ cashierservice.subtotal() }}.00</p>
-                        </div>
-                    </div>
 
-                    <footer>
-                        <p style="margin-bottom: 10px;">---------------------------------------------------------------------------------------------------</p>
-                        <p style="text-align: center;">Thank you for your purchase!</p>
-                        <p>
-                            Please keep this receipt as proof of transaction.<br> Returns or exchanges are accepted within 7 days provided items <br>are unused and in original condition.
-                        </p>
-                    </footer>
-                </section>
+        <section id="payment-method" *ngIf="!paymentMethod()">
+            <div class="method" (click)="paymentMethod.set('cash')">
+                <img src="assets/cash-method-icon.png" alt="">
+                <p>CASH</p>
             </div>
-            <div id="payment"></div>
-        </div>
+            <div class="method" (click)="paymentMethod.set('cashless')">
+                <img src="assets/cashless-method-icon.png" alt="">
+                <p>CASHLESS</p>
+            </div>
+        </section>
+
+        <section id="cash-method" *ngIf="paymentMethod() === 'cash'">
+            <div id="to-pay">
+                <p style="font-size: 15px;">AMOUNT TO PAY</p>
+                <p style="font-size: 50px; font-weight: 700;">₱ {{ cashierservice.totalAmount() | number:'1.2-2' }}</p>
+            </div>
+            <div id="payment">
+                <input type="text" [class.insufficient]="!sufficientAmount()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" #amount>
+                <button (click)="continuePaymentBtn(amount)">CONTINUE PAYMENT</button>
+            </div>
+        </section>
     </div>
 </div>

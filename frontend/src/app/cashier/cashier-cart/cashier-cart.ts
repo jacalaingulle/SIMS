@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, OnInit, signal } from '@angular/core';
 import { Service } from '../../service/service';
-import { productsInterface } from '../../interface/interface';
+import { cartInterface, productsInterface } from '../../interface/interface';
 import { CashierService } from '../cashier-service';
 import { ɵInternalFormsSharedModule } from "@angular/forms";
 
@@ -19,9 +19,10 @@ export class CashierCart implements OnInit{
 
   retail = signal(false);
   time = signal(new Date());
-  updatingQty = signal(false);
-  selectedItem!: productsInterface;
-  
+  updatingItem = signal(false);
+  selectedItem!: cartInterface;
+  checkedWholesale = signal(false);
+    
   ngOnInit(): void {
     setInterval(() => {
       this.time.set(new Date());
@@ -31,22 +32,49 @@ export class CashierCart implements OnInit{
     this.cashierservice.transactionId.set(this.time().getTime().toString());
   }
 
-  selectCartItem(item : productsInterface){
+  selectCartItem(item : cartInterface){
     this.selectedItem = item;
-    this.updatingQty.set(true);
+    this.updatingItem.set(true);
   }
 
-  changeQty(newqty : HTMLInputElement){
-    const item = this.cashierservice.cart().find(product => product.serial === this.selectedItem.serial);
+  updateItem(newqty : HTMLInputElement, wholesale : boolean){
+    const cartItem = this.cashierservice.cart().find(item => item.serial === this.selectedItem.serial);
 
-    if(item){
-      item.qty = parseInt(newqty.value);
+    if(newqty.value === '0' || newqty.value === ''){
+      this.cashierservice.cart.set(this.cashierservice.cart().filter(product => product.serial !== cartItem?.serial));
+      this.cashierservice.checkedVat.set(false)
+    }else{
+      if(cartItem){
+        
+        if(wholesale){
+          if(!cartItem.wholesaleApplied){
+            cartItem.price = cartItem.wholesalePrice;
+            cartItem.wholesaleApplied = true;
+            this.checkedWholesale.set(true);
+          }
+        }else{
+          cartItem.price = cartItem.retailPrice;
+          cartItem.wholesaleApplied = false;
+          this.checkedWholesale.set(false);
+        }
+
+        cartItem.qty = parseInt(newqty.value);
+        cartItem.totalprice = cartItem.price * cartItem.qty;
+      }
     }
     
-    this.updatingQty.set(false);
+    this.updatingItem.set(false);
     newqty.value = '';
-
-    this.cashierservice.subtotal.set(this.cashierservice.cart().reduce((sum, item) => sum + (item.qty >= 5 ? item.retailPrice * item.qty : item.wholesalePrice * item.qty), 0))
+    this.cashierservice.calculateSummary();
   }
 
+  toggleVat(vat : HTMLInputElement){
+    if(vat.checked){
+      this.cashierservice.checkedVat.set(true);
+    }else{
+      this.cashierservice.checkedVat.set(false);
+    }
+
+    this.cashierservice.calculateSummary();
+  }
 }

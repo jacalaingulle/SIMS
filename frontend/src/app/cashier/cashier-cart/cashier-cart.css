@@ -73,7 +73,7 @@
     }
 }
 
-#qty-backdrop{
+#item-backdrop{
     position: absolute;
     top: 0;
     left: 0;
@@ -84,7 +84,7 @@
     align-content: center;
     z-index: 1;
 
-    #qty-modal{
+    #item-modal{
         background-color: white;
         padding: 40px;
         padding-top: 30px;
@@ -102,6 +102,17 @@
             font-weight: 700;
         }
 
+        .box-container{
+            display: flex;
+            align-items: center;
+            height: 30px;
+        }
+
+        .txtbox{
+            width: 20px;
+            height: 20px;
+        }
+
         button{
             height: 40px;
             font-size: 25px;
@@ -110,6 +121,7 @@
             border-radius: 5px;
             border: none;
             cursor: pointer;
+            margin-top: 10px;
         }
     }
 }
