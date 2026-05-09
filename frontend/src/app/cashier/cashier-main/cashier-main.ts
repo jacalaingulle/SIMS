@@ -6,10 +6,11 @@ import { ProductList } from '../product-list/product-list';
 import { Service } from '../../service/service';
 import { Checkout } from '../checkout/checkout';
 import { CommonModule } from '@angular/common';
+import { Receipt } from '../receipt/receipt';
 
 @Component({
   selector: 'app-cashier-main',
-  imports: [CashierNavigations, CashierCart, ProductList, Checkout, CommonModule],
+  imports: [CashierNavigations, CashierCart, ProductList, Checkout, CommonModule, Receipt],
   templateUrl: './cashier-main.html',
   styleUrl: './cashier-main.css',
 })

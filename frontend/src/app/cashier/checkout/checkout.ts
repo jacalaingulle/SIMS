@@ -27,25 +27,24 @@ export class Checkout implements OnInit {
   }
 
   continuePaymentBtn(amount : HTMLInputElement){
-    this.cashierservice.isPrinting.set(true);
-    this.paymentMethod.set('');
-    this.cashierservice.isCheckOut.set(false);
-    window.electronAPI.printReceipt();
 
-    // if(this.cashierservice.totalAmount() <= parseInt(amount.value)){
-    //   this.sufficientAmount.set(true);
-    //   this.payment.set(parseInt(amount.value));
-
-    //   setTimeout(() => {
-    //     window.print();
-    //   }, 1000);
-    // }else{
-    //   this.sufficientAmount.set(false);
-    //   setTimeout(() => {
-    //     this.sufficientAmount.set(true);
-    //   }, 2000);
-    //   amount.value = '';
-    // }
+    if(this.cashierservice.totalAmount() <= parseInt(amount.value)){
+      this.sufficientAmount.set(true);
+      this.payment.set(parseInt(amount.value));
+      this.cashierservice.isPrinting.set(true);
+      this.paymentMethod.set('');
+      this.cashierservice.isCheckOut.set(false);
+      setTimeout(() => {
+        this.cashierservice.cart.set([]);
+        this.cashierservice.isPrinting.set(false);
+      }, 2000);
+    }else{
+      this.sufficientAmount.set(false);
+      setTimeout(() => {
+        this.sufficientAmount.set(true);
+      }, 2000);
+      amount.value = '';
+    }
   }
 
 

@@ -1,0 +1,36 @@
+<div id="receipt-backdrop">
+    <div id="receipt">
+        <header>
+            <div style="display: block; margin-top: -11px; width: 60mm;">
+                <p style="font-size: 50px; font-weight: 800; margin-left: -2px; margin-top: -5px;">HezTech</p>
+                <p style="font-size: 20px; font-weight: 500;">Computer Store</p>
+            </div>
+            <div style="display: block; justify-items: end; position: relative;">
+                <p style="background-color: rgba(0, 0, 0, 0.8); height: 33px; width: calc(210mm - 80mm); margin-bottom: 5px; align-content: start;"></p>
+                <p style="position: absolute; width: 37mm; height: 45px; background-color: rgb(255, 255, 255); font-size: 30px; font-weight: 700; text-align: center; align-content: center; top: -7px; right: 30px;">INVOICE</p>
+                <p style="font-size: 14px;">Cabadbaran City, Agusan del Norte</p>
+                <p style="font-size: 14px;"> Contact No. : 0963 349 2973</p>
+            </div>
+        </header>
+        <div id="section-2">
+            <p><span style="font-weight: 500;">Customer Name : </span>{{ service.loggedUser.name || ''}}</p>
+            <p><span style="font-weight: 500;">Date : </span> {{ cashierservice.time() | date:'MMM d, y - h:mm a' }}</p>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <th style="width: 54%; text-align: start; padding-left: 10px;">Description</th>
+                    <th style="width: 10%;">Qty.</th>
+                    <th style="width: 18%;">Unit Price</th>
+                    <th style="width: 18%;">Total Price</th>
+                </tr>
+                <tr *ngFor="let item of cashierservice.cart()">
+                    <td style="text-align: start; padding-left: 10px;">{{ item.name }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td>{{ item.price | number:'1.2-2' }}</td>
+                    <td>{{ item.totalprice | number:'1.2-2' }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
