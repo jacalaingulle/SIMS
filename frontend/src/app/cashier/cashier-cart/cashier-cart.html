@@ -22,7 +22,7 @@
 </section>
 
 <section id="lower-section">
-    <p id="time">{{ time() | date:'hh:mm a'}}</p>
+    <p id="time">{{ cashierservice.time() | date:'hh:mm a'}}</p>
     <div id="transc-id-container">
         <p>Transaction ID :</p>
         <p style="font-size: 50px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; opacity: 70%;">{{ cashierservice.transactionId() }}</p>

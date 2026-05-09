@@ -21,8 +21,8 @@
                 <p style="font-size: 15px;">AMOUNT TO PAY</p>
                 <p style="font-size: 50px; font-weight: 700;">₱ {{ cashierservice.totalAmount() | number:'1.2-2' }}</p>
             </div>
-            <div id="payment">
-                <input type="text" [class.insufficient]="!sufficientAmount()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" #amount>
+            <div id="payment" #payment>
+                <input type="text" autofocus [class.insufficient]="!sufficientAmount()" onkeypress="return event.charCode >= 48 && event.charCode <= 57" #amount>
                 <button (click)="continuePaymentBtn(amount)">CONTINUE PAYMENT</button>
             </div>
         </section>

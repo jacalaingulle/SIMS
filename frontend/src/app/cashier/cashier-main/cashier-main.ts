@@ -5,10 +5,11 @@ import { CashierService } from '../cashier-service';
 import { ProductList } from '../product-list/product-list';
 import { Service } from '../../service/service';
 import { Checkout } from '../checkout/checkout';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cashier-main',
-  imports: [CashierNavigations, CashierCart, ProductList, Checkout],
+  imports: [CashierNavigations, CashierCart, ProductList, Checkout, CommonModule],
   templateUrl: './cashier-main.html',
   styleUrl: './cashier-main.css',
 })

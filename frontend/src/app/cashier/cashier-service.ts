@@ -18,6 +18,8 @@ export class CashierService {
   discount = signal<number>(0);
   totalAmount = signal<number>(0);
   transactionId = signal('');
+  isPrinting = signal(false);
+  time = signal(new Date());
 
   calculateSummary(){
     this.subtotal.set(0);

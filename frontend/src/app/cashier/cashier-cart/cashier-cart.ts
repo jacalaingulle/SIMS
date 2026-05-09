@@ -18,18 +18,17 @@ export class CashierCart implements OnInit{
   constructor(private cdr : ChangeDetectorRef, public service : Service, public cashierservice : CashierService){}
 
   retail = signal(false);
-  time = signal(new Date());
   updatingItem = signal(false);
   selectedItem!: cartInterface;
   checkedWholesale = signal(false);
     
   ngOnInit(): void {
     setInterval(() => {
-      this.time.set(new Date());
+      this.cashierservice.time.set(new Date());
       this.cdr.detectChanges();
     }, 1000);
 
-    this.cashierservice.transactionId.set(this.time().getTime().toString());
+    this.cashierservice.transactionId.set(this.cashierservice.time().getTime().toString());
   }
 
   selectCartItem(item : cartInterface){

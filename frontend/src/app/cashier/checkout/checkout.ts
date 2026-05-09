@@ -3,6 +3,12 @@ import { CashierService } from '../cashier-service';
 import JsBarcode from 'jsbarcode';
 import { CommonModule, NgIf } from '@angular/common';
 
+declare global {
+  interface Window {
+    electronAPI: any;
+  }
+}
+
 @Component({
   selector: 'app-checkout',
   imports: [CommonModule],
@@ -14,21 +20,32 @@ export class Checkout implements OnInit {
   constructor(public cashierservice : CashierService){}
   paymentMethod = signal('')
   sufficientAmount = signal(true);
+  payment = signal(0);
 
   ngOnInit(): void {
     // this.generateTransacIdBarcode();
   }
 
   continuePaymentBtn(amount : HTMLInputElement){
-    if(this.cashierservice.totalAmount() <= parseInt(amount.value)){
-      this.sufficientAmount.set(true);
-    }else{
-      this.sufficientAmount.set(false);
-      setTimeout(() => {
-        this.sufficientAmount.set(true);
-      }, 2000);
-      amount.value = '';
-    }
+    this.cashierservice.isPrinting.set(true);
+    this.paymentMethod.set('');
+    this.cashierservice.isCheckOut.set(false);
+    window.electronAPI.printReceipt();
+
+    // if(this.cashierservice.totalAmount() <= parseInt(amount.value)){
+    //   this.sufficientAmount.set(true);
+    //   this.payment.set(parseInt(amount.value));
+
+    //   setTimeout(() => {
+    //     window.print();
+    //   }, 1000);
+    // }else{
+    //   this.sufficientAmount.set(false);
+    //   setTimeout(() => {
+    //     this.sufficientAmount.set(true);
+    //   }, 2000);
+    //   amount.value = '';
+    // }
   }
 
 
