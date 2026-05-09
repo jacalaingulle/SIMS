@@ -17,9 +17,11 @@ export class CashierService {
   checkedVat = signal(false);
   discount = signal<number>(0);
   totalAmount = signal<number>(0);
+  payment = signal(0);
   transactionId = signal('');
   isPrinting = signal(false);
   time = signal(new Date());
+  customerName = signal('')
 
   calculateSummary(){
     this.subtotal.set(0);

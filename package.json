@@ -1,11 +1,13 @@
 {
-  "dependencies": {
-    "jsbarcode": "^3.12.3"
-  },
   "name": "salesandinventorymanagementsystem",
   "version": "1.0.0",
   "description": "",
   "main": "electron/main.js",
+
+  "dependencies": {
+    "jsbarcode": "^3.12.3"
+  },
+  
   "devDependencies": {
     "concurrently": "^9.2.1",
     "electron": "^42.0.1",
@@ -19,7 +21,6 @@
     "start": "concurrently \"npm run frontend\" \"wait-on http://localhost:4200 && npm run electron\"",
     "dist": "electron-builder"
   },
-
   "build": {
     "appId": "com.sales.inventory",
     "win": {

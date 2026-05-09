@@ -7,13 +7,13 @@
             </div>
             <div style="display: block; justify-items: end; position: relative;">
                 <p style="background-color: rgba(0, 0, 0, 0.8); height: 33px; width: calc(210mm - 80mm); margin-bottom: 5px; align-content: start;"></p>
-                <p style="position: absolute; width: 37mm; height: 45px; background-color: rgb(255, 255, 255); font-size: 30px; font-weight: 700; text-align: center; align-content: center; top: -7px; right: 30px;">INVOICE</p>
+                <p style="position: absolute; width: 55mm; height: 45px; background-color: rgb(255, 255, 255); font-size: 20px; font-weight: 900; text-align: center; align-content: center; top: -7px; right: 50px;">PAYMENT RECEIPT</p>
                 <p style="font-size: 14px;">Cabadbaran City, Agusan del Norte</p>
                 <p style="font-size: 14px;"> Contact No. : 0963 349 2973</p>
             </div>
         </header>
         <div id="section-2">
-            <p><span style="font-weight: 500;">Customer Name : </span>{{ service.loggedUser.name || ''}}</p>
+            <p><span style="font-weight: 500;">Customer Name : </span>{{ cashierservice.customerName() }}</p>
             <p><span style="font-weight: 500;">Date : </span> {{ cashierservice.time() | date:'MMM d, y - h:mm a' }}</p>
         </div>
         <div>
@@ -31,6 +31,33 @@
                     <td>{{ item.totalprice | number:'1.2-2' }}</td>
                 </tr>
             </table>
+            <div style="display: flex; border-bottom: 1px solid rgba(0, 0, 0, 0.8);">
+                <section id="notes" style="line-height: 1.7; height: auto;">
+                    <p><span>Payment Method : </span>Cash</p>
+                    <p><span>Processed By : </span>{{ service.loggedUser.name }}</p>
+                    <p><span>Transaction ID : </span>{{ cashierservice.transactionId() }}</p>
+                    <svg id="barcode" style="margin-left: -7px;"></svg>
+                </section>
+                <section id="summary">
+                    <div id="label">
+                        <p>Subtotal : </p>
+                        <p>Value Added Tax : </p>
+                        <p>Discount : </p>
+                        <p style="font-size: 17px; font-weight: 700;">Total Amount : </p>
+                        <p style="font-size: 17px; font-weight: 700;">Tendered Amount : </p>
+                        <p style="font-size: 17px; font-weight: 700;">Change : </p>
+                    </div>
+                    <div id="value">
+                        <p>₱ {{ cashierservice.subtotal() | number:'1.2-2' }}</p>
+                        <p>₱ {{ cashierservice.vat() | number:'1.2-2' }}</p>
+                        <p>₱ {{ cashierservice.discount() | number:'1.2-2' }}</p>
+                        <p style="font-size: 17px; font-weight: 700;">₱ {{ cashierservice.totalAmount() | number:'1.2-2' }}</p>
+                        <p style="font-size: 17px; font-weight: 700;">₱ {{ cashierservice.payment() | number:'1.2-2' }}</p>
+                        <p style="font-size: 17px; font-weight: 700;">₱ {{ cashierservice.payment() - cashierservice.totalAmount() | number:'1.2-2' }}</p>
+                    </div>
+                </section>
+            </div>
+            <footer>~ THANK YOU FOR YOUR PURCHASE ~</footer>
         </div>
     </div>
 </div>
